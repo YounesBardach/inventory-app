@@ -1,0 +1,74 @@
+<h2>Sales</h2>
+<% if (errors) { %>
+<div>
+  <% errors.forEach(function(error) { %>
+  <p><%= error.msg %></p>
+  <% }); %>
+</div>
+<% } %>
+
+<!-- Form to Add a New Sale -->
+<form action="/sales" method="POST">
+  <label for="quantity_sold">Quantity Sold:</label>
+  <input
+    type="number"
+    id="quantity_sold"
+    name="quantity_sold"
+    value="<%= typeof formData !== 'undefined' ? formData.quantity_sold : '' %>"
+    required
+  />
+
+  <label for="total_sale">Total Sale:</label>
+  <input
+    type="number"
+    id="total_sale"
+    name="total_sale"
+    step="0.01"
+    value="<%= typeof formData !== 'undefined' ? formData.total_sale : '' %>"
+    required
+  />
+
+  <label for="product_id">Product ID:</label>
+  <input
+    type="number"
+    id="product_id"
+    name="product_id"
+    value="<%= typeof formData !== 'undefined' ? formData.product_id : '' %>"
+    required
+  />
+
+  <button type="submit">Add Sale</button>
+</form>
+
+<!-- Display Existing Sales -->
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Quantity Sold</th>
+      <th>Total Sale</th>
+      <th>Product ID</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if (sales.length > 0) { %> <% sales.forEach(sale => { %>
+    <tr>
+      <td><%= sale.id %></td>
+      <td><%= sale.quantity_sold %></td>
+      <td>$<%= sale.total_sale %></td>
+      <td><%= sale.product_id %></td>
+      <td>
+        <a href="/sales/<%= sale.id %>">Edit</a>
+        <form action="/sales/<%= sale.id %>?_method=DELETE" method="POST">
+          <button type="submit">Delete</button>
+        </form>
+      </td>
+    </tr>
+    <% }); %> <% } else { %>
+    <tr>
+      <td colspan="5">No sales available.</td>
+    </tr>
+    <% } %>
+  </tbody>
+</table>

@@ -1,0 +1,44 @@
+<h2>Edit Supplier</h2>
+
+<!-- Display errors if there are any -->
+<% if (errors) { %>
+<div>
+  <% errors.forEach(function(error) { %>
+  <p><%= error.msg %></p>
+  <% }); %>
+</div>
+<% } %>
+
+<!-- Form to Edit Supplier -->
+<form action="/suppliers/<%= supplier.id %>?_method=PUT" method="POST">
+  <label for="name">Supplier Name:</label>
+  <input
+    type="text"
+    id="name"
+    name="name"
+    value="<%= typeof formData !== 'undefined' ? formData.name : supplier.name %>"
+    required
+  />
+
+  <label for="phone">Phone:</label>
+  <input
+    type="text"
+    id="phone"
+    name="phone"
+    value="<%= typeof formData !== 'undefined' ? formData.phone : supplier.phone %>"
+    required
+  />
+
+  <label for="email">Email:</label>
+  <input
+    type="email"
+    id="email"
+    name="email"
+    value="<%= typeof formData !== 'undefined' ? formData.email : supplier.email %>"
+    required
+  />
+
+  <button type="submit">Update Supplier</button>
+</form>
+
+<a href="/suppliers">Back to Supplier List</a>

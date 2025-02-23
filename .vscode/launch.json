@@ -1,0 +1,25 @@
+{
+  "version": "0.2.0", // Specifies the schema version of launch.json
+  "configurations": [
+    {
+      "type": "node", // Defines the debugger type (Node.js in this case)
+      "request": "launch", // Specifies that we want to launch a new process (instead of attaching to an existing one)
+      "name": "Debug with Nodemon", // Display name for this configuration in the VS Code debugger
+      "runtimeExecutable": "npx", // Runs the debugger using `npx` (so it can use locally installed dependencies like `nodemon`)
+      "runtimeArgs": ["nodemon", "--inspect", "app.mjs"],
+      // ^ Runs `nodemon --inspect src/app.mjs`
+      // - `nodemon` watches for file changes and restarts the app automatically
+      // - `--inspect` enables the Node.js debugging protocol (so you can set breakpoints)
+      "restart": true, // Automatically restarts debugging when the app crashes or exits
+      "console": "integratedTerminal", // Uses the VS Code integrated terminal to display logs and output
+      "internalConsoleOptions": "neverOpen",
+      // ^ Prevents the debug console from opening automatically (since logs are in the terminal)
+      "skipFiles": ["<node_internals>/**"],
+      // ^ Skips debugging Node.js internal modules (like `fs`, `http`, etc.), keeping focus on your own code
+      "env": {
+        "NODE_ENV": "development"
+        // ^ Sets the environment variable `NODE_ENV=development`, which is useful for loading dev configurations
+      }
+    }
+  ]
+}

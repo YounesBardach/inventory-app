@@ -1,0 +1,74 @@
+<h2>Suppliers</h2>
+<% if (errors) { %>
+<div>
+  <% errors.forEach(function(error) { %>
+  <p><%= error.msg %></p>
+  <% }); %>
+</div>
+<% } %>
+
+<!-- Form to Add a New Supplier -->
+<form action="/suppliers" method="POST">
+  <label for="name">Supplier Name:</label>
+  <input
+    type="text"
+    id="name"
+    name="name"
+    value="<%= typeof formData !== 'undefined' ? formData.name : '' %>"
+    required
+  />
+
+  <label for="phone">Phone:</label>
+  <input
+    type="text"
+    id="phone"
+    name="phone"
+    value="<%= typeof formData !== 'undefined' ? formData.phone : '' %>"
+    required
+  />
+
+  <label for="email">Email:</label>
+  <input
+    type="email"
+    id="email"
+    name="email"
+    value="<%= typeof formData !== 'undefined' ? formData.email : '' %>"
+    required
+  />
+
+  <button type="submit">Add Supplier</button>
+</form>
+
+<!-- Display Existing Suppliers -->
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Phone</th>
+      <th>Email</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if (suppliers.length > 0) { %> <% suppliers.forEach(supplier => { %>
+    <tr>
+      <td><%= supplier.name %></td>
+      <td><%= supplier.phone %></td>
+      <td><%= supplier.email %></td>
+      <td>
+        <a href="/suppliers/<%= supplier.id %>">Edit</a>
+        <form
+          action="/suppliers/<%= supplier.id %>?_method=DELETE"
+          method="POST"
+        >
+          <button type="submit">Delete</button>
+        </form>
+      </td>
+    </tr>
+    <% }); %> <% } else { %>
+    <tr>
+      <td colspan="4">No suppliers available.</td>
+    </tr>
+    <% } %>
+  </tbody>
+</table>
